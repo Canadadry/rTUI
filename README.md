@@ -17,4 +17,4 @@ let mut screen = view::Screen::new(WIDTH,HEIGHT);
 screen.draw_at("0123456789\nABCEDFGHIJKLMNOPQRSTUVWXYZ\n",0,0);
 ```
 
-[screen 0](screenshot/screen_0.png)
+![screen 0](screenshot/screen_0.png)
