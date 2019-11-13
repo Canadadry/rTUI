@@ -1,18 +1,32 @@
 extern crate minifb;
-use minifb::{Key, KeyRepeat, WindowOptions, Window};
+use std::{thread, time};
+use minifb::{Key, WindowOptions, Window};
 
-const WIDTH: usize = 640;
-const HEIGHT: usize = 480;
+mod font;
+mod view;
+
+const WIDTH: usize = 100*font::CHAR_WIDTH;
+const HEIGHT: usize = 66*font::CHAR_HEIGHT;
 const TITLE: &str = "TUI Example - ESC to exit";
 
-fn main() {
-    let window = Window::new(TITLE,WIDTH,HEIGHT,WindowOptions::default());
-    let mut window = window.unwrap_or_else(|e| {panic!("{}", e);});
+fn main() 
+{
+	let window = Window::new(TITLE,WIDTH,HEIGHT,WindowOptions::default());
+	let mut window = window.unwrap_or_else(|e| {panic!("{}", e);});
 
-    let buffer =[ 0u32 ; WIDTH*HEIGHT];
+	let mut screen = view::Screen::new(WIDTH,HEIGHT);
+	screen.draw_at("0123456789\nABCEDFGHIJKLMNOPQRSTUVWXYZ\n",0,0);
 
-    while window.is_open() && !window.is_key_down(Key::Escape)
-    {
-        window.update_with_buffer(&buffer).unwrap();
-    }
+	let sixiteen_millis = time::Duration::from_millis(16);
+	while window.is_open() && !window.is_key_down(Key::Escape)
+	{
+		let start = time::Instant::now();
+		// do stuff here
+		let delta = time::Instant::now() - start;
+		if sixiteen_millis > delta {
+			thread::sleep(sixiteen_millis-(delta));
+		}
+
+		window.update_with_buffer(screen.get_buffer()).unwrap();
+	}
 }
