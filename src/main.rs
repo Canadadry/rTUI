@@ -3,19 +3,20 @@ use std::{thread, time};
 use minifb::{Key, WindowOptions, Window};
 
 mod font;
-mod view;
+mod color;
+mod screen;
 
-const WIDTH: usize = 100*font::CHAR_WIDTH;
-const HEIGHT: usize = 66*font::CHAR_HEIGHT;
+const WIDTH: usize = 100;
+const HEIGHT: usize = 60;
 const TITLE: &str = "TUI Example - ESC to exit";
 
 fn main() 
 {
-	let window = Window::new(TITLE,WIDTH,HEIGHT,WindowOptions::default());
-	let mut window = window.unwrap_or_else(|e| {panic!("{}", e);});
+	let mut screen = screen::Screen::new(WIDTH,HEIGHT,color::BLUE);
+	screen.draw_at("0123456789\nABCEDFGHIJKLMNOPQRSTUVWXYZ\n",1,1,color::RED,color::BLUE);
 
-	let mut screen = view::Screen::new(WIDTH,HEIGHT);
-	screen.draw_at("0123456789\nABCEDFGHIJKLMNOPQRSTUVWXYZ\n",0,0);
+	let window = Window::new(TITLE,screen.real_width(),screen.real_height(),WindowOptions::default());
+	let mut window = window.unwrap_or_else(|e| {panic!("{}", e);});
 
 	let sixiteen_millis = time::Duration::from_millis(16);
 	while window.is_open() && !window.is_key_down(Key::Escape)
@@ -26,7 +27,6 @@ fn main()
 		if sixiteen_millis > delta {
 			thread::sleep(sixiteen_millis-(delta));
 		}
-
-		window.update_with_buffer(screen.get_buffer()).unwrap();
+		window.update_with_buffer(screen.buffer()).unwrap();
 	}
 }
