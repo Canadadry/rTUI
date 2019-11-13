@@ -22,18 +22,12 @@ impl Screen
 		}
 	}
 
-	pub fn draw_at(&mut self, string:&str,x:usize,y:usize,fg:color::Color,bg:color::Color)
+	pub fn draw_at(&mut self, string:&String,x:usize,y:usize,fg:color::Color,bg:color::Color)
 	{
 		let mut x_mut = x * (font::CHAR_WIDTH  + font::CHAR_SPACE);
 		let mut y_mut = y * (font::CHAR_HEIGHT + font::LINE_SPACE);
 		for c in string.bytes()
 		{
-			if c == b'\n'
-			{
-				y_mut += font::CHAR_HEIGHT + font::LINE_SPACE;
-				x_mut = x * (font::CHAR_WIDTH  + font::CHAR_SPACE);
-				continue;
-			}
 			let glyph = self.font[c as usize];
 			for j in 0..font::CHAR_HEIGHT
 			{
