@@ -1,4 +1,5 @@
 extern crate minifb;
+extern crate lodepng;
 use std::{thread, time};
 use minifb::{Key, WindowOptions, Window};
 
@@ -13,6 +14,7 @@ const TITLE: &str = "TUI Example - ESC to exit";
 
 fn main() 
 {
+
 	let mut screen = screen::Screen::new(WIDTH,HEIGHT,color::BLUE);
 	screen.draw_at(&String::from("0123456789\nABCEDFGHIJKLMNOPQRSTUVWXYZ\n"),1,1,color::RED,color::BLUE);
 

@@ -5,53 +5,46 @@ pub struct Screen{
 	width:usize,
 	height:usize,
 	buffer:Vec<u32>,
-	font:font::Font
+	font:font::GlyphMap
 }
 
 impl Screen
 {
 	pub fn new(width:usize,height:usize,bg:color::Color) -> Screen
 	{
-		let real_width  = width  * (font::CHAR_WIDTH  + font::CHAR_SPACE);
-		let real_height = height * (font::CHAR_HEIGHT + font::LINE_SPACE);
-		Screen{
+		let font = font::GlyphMap::load_png("ressources/font.png");
+		let glyph_size = font.glyph_size();
+		let real_width  = width  * glyph_size;
+		let real_height = height * glyph_size;
+		return Screen{
 			width  : real_width,
 			height : real_height,
 			buffer : vec![bg;real_width*real_height],
-			font   : font::get()
-		}
+			font   : font
+		};
 	}
 
 	pub fn draw_at(&mut self, string:&String,x:usize,y:usize,fg:color::Color,bg:color::Color)
 	{
-		let mut x_mut = x * (font::CHAR_WIDTH  + font::CHAR_SPACE);
-		let mut y_mut = y * (font::CHAR_HEIGHT + font::LINE_SPACE);
+		let glyph_size = self.font.glyph_size();
+		let mut pix_x = x * glyph_size;
+		let     pix_y = y * glyph_size;
+
 		for c in string.bytes()
 		{
-			let glyph = self.font[c as usize];
-			for j in 0..font::CHAR_HEIGHT
-			{
-				for i in 0..font::CHAR_WIDTH
-				{
-					if x_mut+i >=self.width  {continue};
-					if y_mut+j >=self.height {continue};
-					let pos   = (y_mut+j)*self.width + (x_mut+i);
-					let mask  = 1u8<<(font::CHAR_WIDTH-i-1);
-					let byte  = glyph[j];
-					let pixel = byte & mask == mask;
-					self.buffer[pos] = if pixel { fg } else { bg };
-				}			
+			let glyph = self.font.glyph_from_char(c);
+			self.draw_glyph_at(glyph,pix_x,pix_y,fg,bg);
+			pix_x += glyph_size;
+		}
+	}
 
-			}
-			for j in 0..font::LINE_SPACE
-			{
-				let pos   = (y_mut+font::CHAR_HEIGHT+j)*self.width + (x_mut);
-				for i in 0..(font::CHAR_WIDTH + font::CHAR_SPACE)
-				{
-					self.buffer[pos+i] = bg;
-				}
-			}
-			x_mut += font::CHAR_WIDTH + font::CHAR_SPACE;
+	fn draw_glyph_at(&mut self, glyph:font::Glyph, pix_x:usize,pix_y:usize,fg:color::Color,bg:color::Color)
+	{
+		for p in glyph
+		{
+			let pos:usize   = (p.1+pix_y)*self.width+(p.0+pix_x);
+			let pixel       = self.font.pixel_from_id(p.2).unwrap();
+			self.buffer[pos] = if pixel { fg } else { bg };
 		}
 	}
 

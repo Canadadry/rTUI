@@ -6,3 +6,4 @@ version = "0.1.0"
 
 [dependencies]
 minifb = "0.13"
+lodepng = "2.0.0"
