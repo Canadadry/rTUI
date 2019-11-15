@@ -7,15 +7,17 @@ mod font;
 mod color;
 mod screen;
 mod view;
+mod font_builder;
 
 const WIDTH: usize = 50;
 const HEIGHT: usize = 30;
+const FONT_SIZE: usize = 16;
 const TITLE: &str = "TUI Example - ESC to exit";
 
 fn main() 
 {
 
-	let mut screen = screen::Screen::new(WIDTH,HEIGHT,color::BLUE);
+	let mut screen = screen::Screen::new(WIDTH,HEIGHT,FONT_SIZE,color::BLUE);
 	screen.draw_at(&String::from("AZERTYUIOPQSDFGHJKLMWXCVBN"),1,1,color::RED,color::BLACK);
 
 	let mut view  = view::View::new(10,10,10,10);

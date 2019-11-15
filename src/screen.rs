@@ -10,9 +10,9 @@ pub struct Screen{
 
 impl Screen
 {
-	pub fn new(width:usize,height:usize,bg:color::Color) -> Screen
+	pub fn new(width:usize,height:usize,font_size:usize,bg:color::Color) -> Screen
 	{
-		let font = font::GlyphMap::load(20);
+		let font = font::GlyphMap::load(font_size);
 		let glyph_size = font.glyph_size();
 		let real_width  = width  * glyph_size.0;
 		let real_height = height * glyph_size.1;
@@ -50,7 +50,7 @@ impl Screen
 		}
 		for p in glyph.data.iter()
 		{
-			let pos:usize   = (p.1+pix_y+glyph.offest_y)*self.width+(p.0+pix_x+glyph.offest_x);
+			let pos:usize   = (p.1+pix_y+glyph.offset_y)*self.width+(p.0+pix_x+glyph.offset_x);
 			self.buffer[pos] =  color::mix(fg,bg,p.2);
 		}
 	}
