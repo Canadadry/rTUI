@@ -12,10 +12,10 @@ impl Screen
 {
 	pub fn new(width:usize,height:usize,bg:color::Color) -> Screen
 	{
-		let font = font::GlyphMap::load(20,20);
-		let glyph_size = font.glyph_size().0;
-		let real_width  = width  * glyph_size;
-		let real_height = height * glyph_size;
+		let font = font::GlyphMap::load(20);
+		let glyph_size = font.glyph_size();
+		let real_width  = width  * glyph_size.0;
+		let real_height = height * glyph_size.1;
 		return Screen{
 			width  : real_width,
 			height : real_height,
@@ -26,21 +26,21 @@ impl Screen
 
 	pub fn draw_at(&mut self, string:&String,x:usize,y:usize,fg:color::Color,bg:color::Color)
 	{
-		let glyph_size = self.font.glyph_size().0;
-		let mut pix_x = x * glyph_size;
-		let     pix_y = y * glyph_size;
+		let glyph_size = self.font.glyph_size();
+		let mut pix_x = x * glyph_size.0;
+		let     pix_y = y * glyph_size.1;
 
 		for c in string.bytes()
 		{
-			let glyph = self.font.glyph_from_char(c);
-			self.draw_glyph_at(glyph,pix_x,pix_y,fg,bg);
-			pix_x += glyph_size;
+			self.draw_char_at(c,pix_x,pix_y,fg,bg);
+			pix_x += glyph_size.0;
 		}
 	}
 
-	fn draw_glyph_at(&mut self, glyph:font::Glyph, pix_x:usize,pix_y:usize,fg:color::Color,bg:color::Color)
+	fn draw_char_at(&mut self, c:u8, pix_x:usize,pix_y:usize,fg:color::Color,bg:color::Color)
 	{
-		for j in 0..self.font.glyph_size().0
+		let glyph = self.font.get(c);
+		for j in 0..self.font.glyph_size().1
 		{
 			for i in 0..self.font.glyph_size().0
 			{
