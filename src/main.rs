@@ -36,8 +36,12 @@ fn main()
 		if sixiteen_millis > delta {
 			thread::sleep(sixiteen_millis-(delta));
 		}
-		if screen.is_dirty(){
+		if screen.is_dirty()
+		{
 			window.update_with_buffer(screen.buffer()).unwrap();
+		}
+		else{
+			window.update();
 		}
 	}
 }

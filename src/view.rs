@@ -117,8 +117,11 @@ impl View
 				}
 			}
 		}
+		if !self.commands.is_empty()
+		{
+			self.draw_border(screen);
+		}
 		self.commands.clear();
-		self.draw_border(screen);
 	}
 
 	fn draw_border(&mut self, screen:&mut screen::Screen)
