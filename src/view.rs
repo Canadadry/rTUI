@@ -125,15 +125,15 @@ impl View
 	{
 		for i in 0..self.width
 		{
-			screen.draw_at(&String::from("-"),self.x+i,self.y            ,self.fg,self.bg);
-			screen.draw_at(&String::from("-"),self.x+i,self.y+self.height,self.fg,self.bg);
+			screen.draw_at(&String::from("#"),self.x+i,self.y            ,self.fg,self.bg);
+			screen.draw_at(&String::from("#"),self.x+i,self.y+self.height,self.fg,self.bg);
 		}
 		for j in 0..self.height
 		{
-			screen.draw_at(&String::from("|"),self.x           ,self.y+j,self.fg,self.bg);
-			screen.draw_at(&String::from("|"),self.x+self.width,self.y+j,self.fg,self.bg);
+			screen.draw_at(&String::from("#"),self.x           ,self.y+j,self.fg,self.bg);
+			screen.draw_at(&String::from("#"),self.x+self.width,self.y+j,self.fg,self.bg);
 		}
-		screen.draw_at(&String::from("+"),self.x+self.width,self.y+self.height,self.fg,self.bg);
+		screen.draw_at(&String::from("#"),self.x+self.width,self.y+self.height,self.fg,self.bg);
 	}
 
 

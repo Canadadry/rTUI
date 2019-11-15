@@ -19,7 +19,7 @@ impl GlyphMap
 
 	pub fn load(height:usize) -> GlyphMap
 	{
-		return GlyphMap::load_with_spacing(height,0);
+		return GlyphMap::load_with_spacing(height,2);
 	}
 
 	pub fn load_with_spacing(height:usize,spacing:usize) -> GlyphMap
@@ -54,7 +54,7 @@ impl GlyphMap
 		{
 			let glyph = builder.glyph_from_char(i);
 			self.glyphs.push(Glyph{
-				offset_x:0,
+				offset_x:glyph.0,
 				offset_y:glyph.1,
 				data:glyph.2});
 			max_width = std::cmp::max(max_width,glyph.0);

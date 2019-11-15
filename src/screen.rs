@@ -5,7 +5,8 @@ pub struct Screen{
 	width:usize,
 	height:usize,
 	buffer:Vec<u32>,
-	font:font::GlyphMap
+	font:font::GlyphMap,
+	dirty:bool
 }
 
 impl Screen
@@ -20,7 +21,8 @@ impl Screen
 			width  : real_width,
 			height : real_height,
 			buffer : vec![bg;real_width*real_height],
-			font   : font
+			font   : font,
+			dirty  : true,
 		};
 	}
 
@@ -35,6 +37,7 @@ impl Screen
 			self.draw_char_at(c,pix_x,pix_y,fg,bg);
 			pix_x += glyph_size.0;
 		}
+		self.dirty = true;
 	}
 
 	fn draw_char_at(&mut self, c:u8, pix_x:usize,pix_y:usize,fg:color::Color,bg:color::Color)
@@ -55,8 +58,14 @@ impl Screen
 		}
 	}
 
-	pub fn buffer(&self) -> &Vec<u32>
+	pub fn is_dirty(&self) -> bool
 	{
+		return self.dirty;
+	}
+
+	pub fn buffer(&mut self) -> &Vec<u32>
+	{
+		self.dirty = false;
 		return &self.buffer;
 	}
 
