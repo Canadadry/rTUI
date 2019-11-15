@@ -1,66 +1,30 @@
-use lodepng;
+use rusttype::{point, Font,Scale,PositionedGlyph};
+
 
 pub struct Glyph
 {
-	glyph_x:usize,
-	glyph_y:usize,
-	iter_x:usize,
-	iter_y:usize,
-	size:usize
-}
-
-impl Iterator for Glyph {
-    type Item = (usize,usize,usize);
-    
-    fn next(&mut self) -> Option<(usize,usize,usize)> {
-    	if self.iter_x >= self.size {
-    		self.iter_x = 0;
-    		self.iter_y += 1;
-    	}
-    	if self.iter_y >= self.size {
-    		return None;
-    	}
-    	let pos_y    = (self.glyph_y*self.size)+self.iter_y;
-    	let pos_x    = (self.glyph_x*self.size)+self.iter_x; 
-    	let pos      = pos_y*16*self.size+pos_x;
-    	let out      = (self.iter_x,self.iter_y,pos);
-    	self.iter_x += 1;
-
-        return Some(out);
-    }
+	pub offest_x:usize,
+	pub offest_y:usize,
+	pub data:Vec<(usize,usize,f32)>
 }
 
 pub struct GlyphMap
 {
 	size:usize,
-	map:Vec<bool>
+	font:Font<'static>
 }
 
 impl GlyphMap
 {
-	pub fn load_png(filename:&str) -> GlyphMap
+	pub fn load(size:usize) -> GlyphMap
 	{ 
-		let img = lodepng::decode32_file(filename).unwrap();
+		let font_data = include_bytes!("../ressources/Aria.ttf");
+		let font = Font::from_bytes(font_data as &[u8]).expect("Error constructing Font");
 
-		if img.width != img.height  { panic!("Font image must be a square"); }
-		if img.width % 16 != 0 { panic!("Font image size must be a multiple of 16"); }
-		let size = (img.width/16) as usize;
-
-		let mut glyph_map = GlyphMap{
+		GlyphMap{
 			size: size,
-			map: vec![false;256*size*size]
-		};
-
-		for i in 0..img.buffer.len()
-		{
-			if i%128 == 0 { print!("\n");}
-
-			let p = img.buffer[i].rgb();
-			let out:bool =  (0.299*(p.r as f32)/255.0+ 0.587*(p.g as f32)/255.0 +0.114*(p.b as f32)/255.0 ) > 0.5;
-			glyph_map.map[i]=out;
+			font: font
 		}
-
-		return glyph_map;
 	}
 
 	pub fn glyph_size(&self) -> usize
@@ -68,24 +32,53 @@ impl GlyphMap
 		return self.size;
 	}
 
-	pub fn glyph_from_char(&self,char:u8) -> Glyph
+	pub fn glyph_from_char(&self,c:u8) -> Glyph
 	{
-		Glyph
-		{
-			glyph_x:(char as usize)%16,
-			glyph_y:(char as usize)/16,
-			iter_x:0,
-			iter_y:0,
-			size:self.size
-		}
-	}
+		let mut text = String::new();
+		text.push(c as char);
 
-	pub fn pixel_from_id(&self,id:usize) -> Option<bool>
-	{
-		if id >= self.map.len() {
-			None 
-		} else {
-			Some(self.map[id])
+		let scale = Scale::uniform(16.0);
+
+		let v_metrics = self.font.v_metrics(scale);
+		let glyphs: Vec<_> = self.font.layout(&text, scale, point(0.0, 0.0 + v_metrics.ascent)).collect();
+
+		let min_x =  match glyphs.first(){
+			Some(g) => {
+				match g.pixel_bounding_box(){
+					Some(bb) => bb.min.x,
+					None => 0
+				}
+			},
+			None => 0
+		};	
+
+		let max_x =  match glyphs.last(){
+			Some(g) => {
+				match g.pixel_bounding_box(){
+					Some(bb) => bb.max.x,
+					None => 0
+				}
+			}
+			None => 0
+		};	
+
+		let glyphs_width =(max_x - min_x) as u32;
+
+		let mut returned_glyph = Glyph{
+			offest_x:(self.size-(glyphs_width as usize))/2,
+			offest_y:0,
+			data:vec![]
+		};
+
+		for glyph in glyphs 
+		{
+			if let Some(bounding_box) = glyph.pixel_bounding_box() 
+			{
+				returned_glyph.offest_y = if bounding_box.min.y < 0 { 0 } else { bounding_box.min.y as usize};
+				glyph.draw(|x, y, v| { returned_glyph.data.push((x as usize,y as usize,v));});
+			}
 		}
+
+		return returned_glyph;
 	}
 }

@@ -12,7 +12,7 @@ impl Screen
 {
 	pub fn new(width:usize,height:usize,bg:color::Color) -> Screen
 	{
-		let font = font::GlyphMap::load_png("ressources/font.png");
+		let font = font::GlyphMap::load(16);
 		let glyph_size = font.glyph_size();
 		let real_width  = width  * glyph_size;
 		let real_height = height * glyph_size;
@@ -40,10 +40,10 @@ impl Screen
 
 	fn draw_glyph_at(&mut self, glyph:font::Glyph, pix_x:usize,pix_y:usize,fg:color::Color,bg:color::Color)
 	{
-		for p in glyph
+		for p in glyph.data.iter()
 		{
 			let pos:usize   = (p.1+pix_y)*self.width+(p.0+pix_x);
-			let pixel       = self.font.pixel_from_id(p.2).unwrap();
+			let pixel       = p.2 > 0.5;
 			self.buffer[pos] = if pixel { fg } else { bg };
 		}
 	}
