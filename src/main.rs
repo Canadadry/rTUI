@@ -16,7 +16,7 @@ fn main()
 {
 
 	let mut screen = screen::Screen::new(WIDTH,HEIGHT,color::BLUE);
-	screen.draw_at(&String::from("0123456789,ABCEDFGHIJKLMNOPQRSTUVWXYZ\n"),1,1,color::RED,color::BLUE);
+	screen.draw_at(&String::from("Lo"),1,1,color::RED,color::BLACK);
 
 	let mut view  = view::View::new(10,10,10,10);
 	view.draw_at(String::from("test"),3,3);

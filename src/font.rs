@@ -11,25 +11,30 @@ pub struct Glyph
 pub struct GlyphMap
 {
 	size:usize,
+	spacing:usize,
 	font:Font<'static>
 }
 
 impl GlyphMap
 {
-	pub fn load(size:usize) -> GlyphMap
+	pub fn load(size:usize,spacing:usize) -> GlyphMap
 	{ 
-		let font_data = include_bytes!("../ressources/Aria.ttf");
+		let font_data = include_bytes!("../ressources/Monaco.ttf");
 		let font = Font::from_bytes(font_data as &[u8]).expect("Error constructing Font");
+
+		println!("metrics : {:?}",font.v_metrics( Scale::uniform(16.0)) );
+
 
 		GlyphMap{
 			size: size,
+			spacing: spacing,
 			font: font
 		}
 	}
 
-	pub fn glyph_size(&self) -> usize
+	pub fn glyph_size(&self) -> (usize,usize)
 	{
-		return self.size;
+		(self.size,self.spacing)
 	}
 
 	pub fn glyph_from_char(&self,c:u8) -> Glyph
@@ -37,7 +42,7 @@ impl GlyphMap
 		let mut text = String::new();
 		text.push(c as char);
 
-		let scale = Scale::uniform(16.0);
+		let scale = Scale::uniform(self.size as f32);
 
 		let v_metrics = self.font.v_metrics(scale);
 		let glyphs: Vec<_> = self.font.layout(&text, scale, point(0.0, 0.0 + v_metrics.ascent)).collect();
