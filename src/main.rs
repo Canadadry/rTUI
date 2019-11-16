@@ -22,7 +22,15 @@ fn main()
 	screen.draw_at(&String::from("AZERTYUIOPQSDFGHJKLMWXCVBN"),1,1,color_table::RED,color_table::BLACK);
 
 	let mut view  = view::View::new(10,10,10,10);
-	view.draw_at(String::from("test"),3,3);
+	view.draw_at(String::from("testtesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\ntesttesttest\n"),0,0);
+
+	let mut view2  = view::View::new(22,5,10,10);
+	view2.stream(String::from("testtesttest\ntesttest"));
+	view2.color(color_table::ELECTRIC_INDIGO,color_table::DEEP_PINK);
+	view2.stream(String::from("test\ntesttesttest\nt"));
+	view2.stream(String::from("esttest"));
+	view2.color(color_table::RED,color_table::OLIVE);
+	view2.stream(String::from("test\ntesttesttesttesttesttest"));
 
 	let window = Window::new(TITLE,screen.real_width(),screen.real_height(),WindowOptions::default());
 	let mut window = window.unwrap_or_else(|e| {panic!("{}", e);});
@@ -32,6 +40,7 @@ fn main()
 	{
 		let start = time::Instant::now();
 		view.apply(&mut screen);
+		view2.apply(&mut screen);
 		// do stuff here
 		let delta = time::Instant::now() - start;
 		if sixiteen_millis > delta {

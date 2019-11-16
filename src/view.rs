@@ -14,6 +14,9 @@ enum Command
 		y:usize,
 		content:String
 	},
+	Stream{
+		content:String
+	},
 	Color
 	{
 		bg:color::Color,
@@ -63,6 +66,13 @@ impl View
 		});
 	}
 
+	pub fn stream(&mut self, string:String)
+	{
+		self.commands.push(Command::Stream{
+			content:string
+		});
+	}
+
 	pub fn color(&mut self, bg:color::Color, fg:color::Color)
 	{
 		self.commands.push(Command::Color{
@@ -83,6 +93,8 @@ impl View
 
 	pub fn apply(&mut self, screen:&mut screen::Screen) 
 	{
+		let mut stream = (0usize,0usize);
+
 		for c in &self.commands
 		{
 			match c {
@@ -101,6 +113,30 @@ impl View
 						let extract:String = line[..column_count].to_string();
 	
 						screen.draw_at(&extract,left,top+i,self.fg,self.bg);
+					}
+				},
+				Command::Stream{content} => {
+					for c in content.chars()
+					{
+						if stream.1 >= (self.height - TOP_BORDER_SIZE - BOTTOM_BORDER_SIZE){
+							break;
+						}
+ 						if c == b'\n' as char {
+ 							stream.0 = 0;
+ 							stream.1 += 1; 
+ 							continue;
+ 						}
+						let left  = stream.0 + self.x + LEFT_BORDER_SIZE;
+						let top   = stream.1+ self.y + TOP_BORDER_SIZE;	
+						screen.draw_at(&c.to_string(),left,top,self.fg,self.bg);
+ 
+						stream.0 += 1;
+						if stream.0 >= (self.width - LEFT_BORDER_SIZE - RIGHT_BORDER_SIZE)
+						{
+ 							stream.0 = 0;
+ 							stream.1 += 1; 
+ 							continue;
+						}
 					}
 				},
 				Command::Clear{x,y,width,height} => {
