@@ -69,32 +69,32 @@ Later I'll Add a more intersting example. Rigth now there is not much more to sa
 
 ## Color table
 
-* `color_table::BLACK             ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/000000.png)
-* `color_table::NAVY              ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/000080.png)
-* `color_table::BLUE              ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/0000FF.png)
-* `color_table::GREEN             ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/008000.png)
-* `color_table::TEAL              ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/008080.png)
-* `color_table::DODGEBLUE         ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/0080FF.png)
-* `color_table::LIME              ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/00FF00.png)
-* `color_table::SPRING            ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/00FF80.png)
-* `color_table::AQUA              ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/00FFFF.png)
-* `color_table::MAROON            ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/800000.png)
-* `color_table::PURPLE            ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/800080.png)
-* `color_table::ELECTRIC_INDIGO   ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/8000FF.png)
-* `color_table::OLIVE             ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/808000.png)
-* `color_table::GRAY              ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/808080.png)
-* `color_table::LIGHT_SLATE_BLUE  ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/8080FF.png)
-* `color_table::CHARTREUSE        ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/80FF00.png)
-* `color_table::LIGHT_GREEN       ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/80FF80.png)
-* `color_table::ELECTRIC_BLUE     ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/80FFFF.png)
-* `color_table::RED               ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF0000.png)
-* `color_table::DEEP_PINK         ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF0080.png)
-* `color_table::FUCHSIA           ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF00FF.png)
-* `color_table::ORANGE            ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF8000.png)
-* `color_table::LIGHT_CORAL       ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF8080.png)
-* `color_table::FUSHIA_PINK       ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF80FF.png)
-* `color_table::YELLOW            ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FFFF00.png)
-* `color_table::WITCH_HAZE        ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FFFF80.png)
-* `color_table::WHITE             ` : ![screen 0](https://www.htmlcsscolor.com/preview/32x32/ffffff.png)
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/000000.png) : `color_table::BLACK`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/000080.png) : `color_table::NAVY`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/0000FF.png) : `color_table::BLUE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/008000.png) : `color_table::GREEN`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/008080.png) : `color_table::TEAL`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/0080FF.png) : `color_table::DODGEBLUE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/00FF00.png) : `color_table::LIME`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/00FF80.png) : `color_table::SPRING`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/00FFFF.png) : `color_table::AQUA`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/800000.png) : `color_table::MAROON`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/800080.png) : `color_table::PURPLE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/8000FF.png) : `color_table::ELECTRIC_INDIGO`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/808000.png) : `color_table::OLIVE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/808080.png) : `color_table::GRAY`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/8080FF.png) : `color_table::LIGHT_SLATE_BLUE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/80FF00.png) : `color_table::CHARTREUSE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/80FF80.png) : `color_table::LIGHT_GREEN`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/80FFFF.png) : `color_table::ELECTRIC_BLUE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF0000.png) : `color_table::RED`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF0080.png) : `color_table::DEEP_PINK`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF00FF.png) : `color_table::FUCHSIA`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF8000.png) : `color_table::ORANGE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF8080.png) : `color_table::LIGHT_CORAL`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FF80FF.png) : `color_table::FUSHIA_PINK`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FFFF00.png) : `color_table::YELLOW`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/FFFF80.png) : `color_table::WITCH_HAZE`
+* ![screen 0](https://www.htmlcsscolor.com/preview/32x32/ffffff.png) : `color_table::WHITE`
 
 
