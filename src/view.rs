@@ -90,8 +90,8 @@ impl View
 					let lines:Vec<String> = content.split("\n").map(|s| s.to_string()).collect();
 					let left              = x+ self.x + LEFT_BORDER_SIZE;
 					let top               = y+ self.y + TOP_BORDER_SIZE;
-					let available_width   = self.width  - x - LEFT_BORDER_SIZE - RIGHT_BORDER_SIZE;
-					let available_height  = self.height - y - TOP_BORDER_SIZE  - BOTTOM_BORDER_SIZE;
+					let available_width   = self.width  - x - LEFT_BORDER_SIZE - RIGHT_BORDER_SIZE ;
+					let available_height  = self.height - y - TOP_BORDER_SIZE  - BOTTOM_BORDER_SIZE ;
 					let lines_count       = std::cmp::min(lines.len(),available_height); 
 
 					for i in 0..lines_count
@@ -130,14 +130,14 @@ impl View
 		for i in 0..self.width
 		{
 			screen.draw_at(&String::from("#"),self.x+i,self.y            ,self.fg,self.bg);
-			screen.draw_at(&String::from("#"),self.x+i,self.y+self.height,self.fg,self.bg);
+			screen.draw_at(&String::from("#"),self.x+i,self.y+self.height-1,self.fg,self.bg);
 		}
 		for j in 0..self.height
 		{
 			screen.draw_at(&String::from("#"),self.x           ,self.y+j,self.fg,self.bg);
-			screen.draw_at(&String::from("#"),self.x+self.width,self.y+j,self.fg,self.bg);
+			screen.draw_at(&String::from("#"),self.x+self.width-1,self.y+j,self.fg,self.bg);
 		}
-		screen.draw_at(&String::from("#"),self.x+self.width,self.y+self.height,self.fg,self.bg);
+		screen.draw_at(&String::from("#"),self.x+self.width-1,self.y+self.height-1,self.fg,self.bg);
 	}
 
 
