@@ -1,4 +1,5 @@
 use color;
+use color_table;
 use screen;
 
 const LEFT_BORDER_SIZE:usize   = 1;
@@ -47,8 +48,8 @@ impl View
 			y:y,
 			width:width,
 			height:height,
-			bg:color::BLACK,
-			fg:color::WHITE,
+			bg:color_table::BLACK,
+			fg:color_table::WHITE,
 			commands:vec![Command::Clear{x:0,y:0,width:width,height:height}]
 		}
 	}

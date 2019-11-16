@@ -5,6 +5,7 @@ use minifb::{Key, WindowOptions, Window};
 
 mod font;
 mod color;
+mod color_table;
 mod screen;
 mod view;
 mod font_builder;
@@ -17,8 +18,8 @@ const TITLE: &str = "TUI Example - ESC to exit";
 fn main() 
 {
 
-	let mut screen = screen::Screen::new(WIDTH,HEIGHT,FONT_SIZE,color::BLUE);
-	screen.draw_at(&String::from("AZERTYUIOPQSDFGHJKLMWXCVBN"),1,1,color::RED,color::BLACK);
+	let mut screen = screen::Screen::new(WIDTH,HEIGHT,FONT_SIZE,color_table::BLUE);
+	screen.draw_at(&String::from("AZERTYUIOPQSDFGHJKLMWXCVBN"),1,1,color_table::RED,color_table::BLACK);
 
 	let mut view  = view::View::new(10,10,10,10);
 	view.draw_at(String::from("test"),3,3);

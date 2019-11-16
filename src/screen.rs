@@ -69,6 +69,12 @@ impl Screen
 		return &self.buffer;
 	}
 
+	pub fn buffer_mut(&mut self) -> &mut Vec<u32>
+	{
+		self.dirty = true;
+		return &mut self.buffer;
+	}
+
 	pub fn real_width(&self)  -> usize { self.width  }
 	pub fn real_height(&self) -> usize { self.height }
 }
