@@ -1,14 +1,11 @@
 extern crate minifb;
-extern crate rusttype;
+extern crate r_tui;
 use std::{thread, time};
 use minifb::{Key, WindowOptions, Window};
 
-mod font;
-mod color;
-mod color_table;
-mod screen;
-mod view;
-mod font_builder;
+use r_tui::color_table;
+use r_tui::screen;
+use r_tui::view;
 
 const WIDTH: usize = 50;
 const HEIGHT: usize = 30;

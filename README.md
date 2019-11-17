@@ -9,20 +9,19 @@ This is an exec for now but will be a lib (not related to minifb).
 The main purpose for this is to build debugging tool and utility developpement. 
 I want them outside of the terminal to allow me to and more rich feature in a near futur like image or event video. 
 
-# screenshot
+# Example
+
+Here a basic example : 
 
 ```rust
 extern crate minifb;
-extern crate rusttype;
+extern crate r_tui;
 use std::{thread, time};
 use minifb::{Key, WindowOptions, Window};
 
-mod font;
-mod color;
-mod color_table;
-mod screen;
-mod view;
-mod font_builder;
+use r_tui::color_table;
+use r_tui::screen;
+use r_tui::view;
 
 const WIDTH: usize = 50;
 const HEIGHT: usize = 30;
@@ -64,8 +63,21 @@ fn main()
 
 ![screen 0](screenshot/screen_0.png)
 
+To run it just do :
+```bash
+cd example; cargo run
+```
+
 Later I'll Add a more intersting example. Rigth now there is not much more to say than this screenshot show. 
 
+
+# Usage 
+
+There is 3 main struct : 
+
+ * `Screen` : hold the pixel buffer and expose a basic draw at function. 
+ * `View` : allow to split the screen into several area. Also have more advande drawing function
+ * `color_table` : not a struct, but a module wich list basic color to start width. 
 
 ## Color table
 
