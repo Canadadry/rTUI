@@ -29,9 +29,13 @@ fn main()
 	view2.color(color_table::RED,color_table::OLIVE);
 	view2.stream(String::from("test\ntesttesttesttesttesttest"));
 
-	for pixel in screen.sub(0,FONT_SIZE,0,FONT_SIZE).unwrap()
+	for pixel in screen.sub(100,100,50,100).unwrap()
 	{
-		screen.buffer_mut()[pixel.2] = color_table::YELLOW;
+		screen.buffer_mut()[pixel.2] = color_table::CHARTREUSE;
+		if (((pixel.0 as i32) - 50)*((pixel.0 as i32) - 50)+((pixel.1 as i32) - 75)*((pixel.1 as i32) - 75)) < 35*35
+		{
+			screen.buffer_mut()[pixel.2] = color_table::OLIVE;
+		}
 	}
 
 	let window = Window::new(TITLE,screen.real_width(),screen.real_height(),WindowOptions::default());

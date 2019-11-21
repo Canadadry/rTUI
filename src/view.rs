@@ -91,7 +91,7 @@ impl View
 		});
 	}
 
-	pub fn apply(&mut self, screen:&mut screen::Screen) 
+	pub fn apply(&mut self,sc:&mut screen::Screen) 
 	{
 		let mut stream = (0usize,0usize);
 
@@ -112,31 +112,21 @@ impl View
 						let column_count   = std::cmp::min(line.len(),available_width); 
 						let extract:String = line[..column_count].to_string();
 	
-						screen.draw_at(&extract,left,top+i,self.fg,self.bg);
+						sc.draw_at(&extract,left,top+i,self.fg,self.bg);
 					}
 				},
 				Command::Stream{content} => {
 					for c in content.chars()
 					{
-						if stream.1 >= (self.height - TOP_BORDER_SIZE - BOTTOM_BORDER_SIZE){
+						if self.is_out_of_view(stream.1){
 							break;
 						}
  						if c == b'\n' as char {
- 							stream.0 = 0;
- 							stream.1 += 1; 
+ 							self.clear_end_of_line(&mut stream.0, &mut stream.1,sc);
  							continue;
  						}
-						let left  = stream.0 + self.x + LEFT_BORDER_SIZE;
-						let top   = stream.1+ self.y + TOP_BORDER_SIZE;	
-						screen.draw_at(&c.to_string(),left,top,self.fg,self.bg);
- 
-						stream.0 += 1;
-						if stream.0 >= (self.width - LEFT_BORDER_SIZE - RIGHT_BORDER_SIZE)
-						{
- 							stream.0 = 0;
- 							stream.1 += 1; 
- 							continue;
-						}
+ 						self.draw_char_at(c,&mut stream.0, &mut stream.1,sc);
+ 						self.jump_if_end_of_line(&mut stream.0, &mut stream.1);
 					}
 				},
 				Command::Clear{x,y,width,height} => {
@@ -144,7 +134,7 @@ impl View
 					{
 						for j in 0..*height
 						{
-							screen.draw_at(&String::from(" "),self.x+x+i,self.y+y+j,self.fg,self.bg);
+							sc.draw_at(&String::from(" "),self.x+x+i,self.y+y+j,self.fg,self.bg);
 						}		
 					}
 				},
@@ -156,10 +146,41 @@ impl View
 		}
 		if !self.commands.is_empty()
 		{
-			self.draw_border(screen);
+			self.draw_border(sc);
 		}
 		self.commands.clear();
 	}
+
+	fn draw_char_at(&self,c:char,at_x:&mut usize,at_y:&usize,screen:&mut screen::Screen) 
+	{
+		let left  = *at_x + self.x + LEFT_BORDER_SIZE;
+		let top   = *at_y + self.y + TOP_BORDER_SIZE;	
+		screen.draw_at(&c.to_string(),left,top,self.fg,self.bg);
+		*at_x += 1;
+	}
+
+	fn jump_if_end_of_line(&self,at_x:&mut usize,at_y:&mut usize)
+	{
+		if *at_x >= (self.width - LEFT_BORDER_SIZE - RIGHT_BORDER_SIZE)
+		{
+			*at_x = 0;
+			*at_y += 1; 
+		}
+	}
+
+	fn clear_end_of_line(&self,at_x:&mut usize,at_y:&mut usize,screen:&mut screen::Screen)
+	{
+		while *at_x < (self.width - LEFT_BORDER_SIZE - RIGHT_BORDER_SIZE)
+		{
+			self.draw_char_at(b' ' as char,at_x,at_y,screen);
+		}
+ 		self.jump_if_end_of_line(at_x,at_y);
+ 	}
+
+ 	fn is_out_of_view(&self,at_y:usize) -> bool
+ 	{
+ 		return at_y >= (self.height - TOP_BORDER_SIZE - BOTTOM_BORDER_SIZE);
+ 	}
 
 	fn draw_border(&mut self, screen:&mut screen::Screen)
 	{

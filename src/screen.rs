@@ -1,5 +1,7 @@
 use font;
 use color;
+use sub_screen;
+
 
 pub struct Screen{
 	width:usize,
@@ -38,6 +40,11 @@ impl Screen
 			pix_x += glyph_size.0;
 		}
 		self.dirty = true;
+	}
+
+	pub fn sub(&self, left:usize,width:usize,top:usize,height:usize) -> Option<sub_screen::SubScreen>
+	{
+		return sub_screen::SubScreen::from(left,width,top,height,&self);
 	}
 
 	fn draw_char_at(&mut self, c:u8, pix_x:usize,pix_y:usize,fg:color::Color,bg:color::Color)
